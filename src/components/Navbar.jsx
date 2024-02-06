@@ -10,7 +10,10 @@ export default function Navbar() {
 
   useEffect(() => {
     // login session check!
-    onUserStateChange(setUser);
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
   }, []);
 
   return (
