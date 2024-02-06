@@ -25,7 +25,7 @@ export default function Navbar() {
         <Link to="/products/new" className="text-2xl">
           <BsFillPencilFill />
         </Link>
-        <div>{user ? <img src={user.reloadUserInfo.photoUrl}></img> : null}</div>
+        <div>{user ? <img src={user.reloadUserInfo?.photoUrl} alt="avatar"></img> : null}</div>
         {!user && <button onClick={login}>Login</button>}
         {user && <button onClick={logout}>Logout</button>}
       </nav>
