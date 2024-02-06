@@ -33,9 +33,13 @@ export function logout() {
 }
 
 export function onUserStateChange(callback) {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     // console.log(user.uid);
-    if (user) getAdminUser(user);
+    if (user) {
+      const isAdmin = await getAdminUser(user);
+      user = { ...user, idAdmin: isAdmin };
+    }
+    console.log(user);
     callback(user);
   });
 }
@@ -43,11 +47,10 @@ export function onUserStateChange(callback) {
 const dbRef = ref(getDatabase());
 
 export async function getAdminUser(user) {
-  await get(child(dbRef, `admins`))
+  return await get(child(dbRef, `admins`))
     .then((snapshot) => {
       if (snapshot.exists()) {
         console.log(snapshot.val(), snapshot.val().includes(user.uid));
-
         if (snapshot.val().includes(user.uid)) return true;
         else return false;
       } else {
