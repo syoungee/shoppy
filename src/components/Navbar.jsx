@@ -10,35 +10,24 @@ export default function Navbar() {
 
   useEffect(() => {
     // login session check!
-    onUserStateChange((user) => {
-      console.log(user);
-      // user info or null
-      setUser(user);
-    });
-  });
-  const handleLogin = () => {
-    login().then(setUser);
-  };
-
-  const handleLogout = () => {
-    logout().then(setUser);
-  };
+    onUserStateChange(setUser);
+  }, []);
 
   return (
-    <header class="flex justify-between border-b border-gray-300 p-2 font-semibold">
-      <Link to="/" class="flex items-center text-4xl text-brand">
+    <header className="flex justify-between border-b border-gray-300 p-2 font-semibold">
+      <Link to="/" className="flex items-center text-4xl text-brand">
         <FiShoppingBag />
         <h1>Shoppy</h1>
       </Link>
-      <nav class="flex items-center gap-4">
+      <nav className="flex items-center gap-4">
         <Link to="/products">Products</Link>
         <Link to="/carts">Carts</Link>
-        <Link to="/products/new" class="text-2xl">
+        <Link to="/products/new" className="text-2xl">
           <BsFillPencilFill />
         </Link>
         <div>{user ? <img src={user.reloadUserInfo.photoUrl}></img> : null}</div>
-        {!user && <button onClick={handleLogin}>Login</button>}
-        {user && <button onClick={handleLogout}>Logout</button>}
+        {!user && <button onClick={login}>Login</button>}
+        {user && <button onClick={logout}>Logout</button>}
       </nav>
     </header>
   );

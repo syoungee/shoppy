@@ -21,36 +21,16 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 // const analytics = getAnalytics(app);
 
-export async function login() {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    console.log(user);
-    return user;
-  } catch (message_1) {
-    return console.error(message_1);
-  }
+export function login() {
+  signInWithPopup(auth, provider).catch(console.error);
 }
 
-export async function logout() {
-  try {
-    await signOut(auth);
-    return null;
-  } catch (message) {
-    return console.error(message);
-  }
+export function logout() {
+  signOut(auth).catch(console.error);
 }
 
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
+    callback(user);
   });
 }
