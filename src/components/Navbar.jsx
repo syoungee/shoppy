@@ -2,21 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiShoppingBag } from 'react-icons/fi';
 import { BsFillPencilFill } from 'react-icons/bs';
-import { login, logout, onUserStateChange } from '../auth/firebaseAuth';
-import { useState, useEffect } from 'react';
 import Button from './Button';
 import User from './User';
+import { useAuthContext } from './context/AuthContext';
 
 export default function Navbar() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    // login session check!
-    onUserStateChange((user) => {
-      console.log(user);
-      setUser(user);
-    });
-  }, []);
+  const { user, login, logout } = useAuthContext();
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2 font-semibold">
