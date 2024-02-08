@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 // import { getDatabase } from 'firebase/database';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getDatabase, ref, child, get, set, push } from 'firebase/database';
 // import { getAnalytics } from 'firebase/analytics';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -41,6 +41,7 @@ export function onUserStateChange(callback) {
 
 const database = ref(getDatabase());
 
+// admin user 여부 판단 함수
 async function adminUser(user) {
   return await get(child(database, 'admins')) //
     .then((snapshot) => {
@@ -55,4 +56,16 @@ async function adminUser(user) {
     .catch((error) => {
       console.error(error);
     });
+}
+
+// products에 data upload & push해주는 함수
+export async function writeUserData(productData) {
+  return await push(child(database, 'products'), {
+    title: productData.title,
+    price: productData.price,
+    image: productData.image,
+    category: productData.category,
+    description: productData.description,
+    options: productData.options.split(','),
+  });
 }
