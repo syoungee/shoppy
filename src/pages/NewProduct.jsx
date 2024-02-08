@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-const unsignedUploadPreset = 'ic9i0qm6';
 
 function uploadFile(file) {
   const url = `https://api.cloudinary.com/v1_1/dhjfhgkkg/upload`;
   const fd = new FormData();
+  const unsignedUploadPreset = 'ic9i0qm6';
+
   fd.append('upload_preset', unsignedUploadPreset);
   fd.append('tags', 'browser_upload');
   fd.append('file', file);
