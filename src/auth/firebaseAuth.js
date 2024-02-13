@@ -2,7 +2,9 @@
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 // import { getDatabase } from 'firebase/database';
-import { getDatabase, ref, child, get, set, push } from 'firebase/database';
+import { getDatabase, ref, child, get, set } from 'firebase/database';
+// import { push } from 'firebase/database';
+import { v4 as uuid } from 'uuid';
 // import { getAnalytics } from 'firebase/analytics';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -60,9 +62,12 @@ async function adminUser(user) {
 
 // products에 data upload & push해주는 함수
 export async function writeUserData(productData) {
-  return await push(child(database, 'products'), {
+  const id = uuid();
+
+  return set(child(database, `products/${id}`), {
+    id,
     title: productData.title,
-    price: productData.price,
+    price: parseInt(productData.price),
     image: productData.image,
     category: productData.category,
     description: productData.description,
