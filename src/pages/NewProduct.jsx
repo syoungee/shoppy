@@ -4,6 +4,8 @@ import { writeUserData } from '../auth/firebaseAuth';
 
 export default function NewProduct() {
   const [image, setImage] = useState(null);
+  const [success, setSuccess] = useState();
+  const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     image: null,
     title: '',
@@ -31,10 +33,18 @@ export default function NewProduct() {
     e.preventDefault();
     try {
       console.log(formData);
-      await writeUserData(formData);
+      setIsUploading(true);
+      await writeUserData(formData).then(() => {
+        setSuccess('성공적으로 제품이 추가되었습니다.');
+        setTimeout(() => {
+          setSuccess(null);
+        }, 4000);
+      });
       console.log('Data submitted successfully');
     } catch (error) {
       console.error('Error submitting data:', error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -70,6 +80,7 @@ export default function NewProduct() {
   return (
     <div className="max-w-lg mx-auto my-10 text-center">
       <h1 className="text-2xl font-bold mb-6">새로운 제품 등록</h1>
+      {success && <p>✅ {success}</p>}
       {image && (
         <div className="mb-4" id="preview">
           {/* preview 이미지가 여기에 추가됨 */}
@@ -92,8 +103,8 @@ export default function NewProduct() {
         <input type="text" name="category" placeholder="category" className="mb-4 p-2 border rounded-md w-full" onChange={handleInputChange} />
         <input type="text" name="description" placeholder="description" className="mb-4 p-2 border rounded-md w-full" onChange={handleInputChange} />
         <input type="text" name="options" placeholder="options" className="mb-4 p-2 border rounded-md w-full" onChange={handleInputChange} />
-        <button className="bg-brand text-white w-full p-2 rounded-md hover:bg-blue-700" type="submit" onClick={submitData}>
-          제품 등록하기
+        <button className="bg-brand text-white w-full p-2 rounded-md hover:bg-blue-700" type="submit" onClick={submitData} disabled={isUploading}>
+          {isUploading ? '업로드중...' : '제품 등록하기'}
         </button>
       </form>
     </div>
