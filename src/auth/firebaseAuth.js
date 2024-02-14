@@ -81,8 +81,8 @@ export async function readProductData() {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const products = snapshot.val();
-        console.log(products);
-        return products;
+        console.log('products', Object.values(products));
+        return Object.values(products);
       }
     })
     .catch((error) => {
