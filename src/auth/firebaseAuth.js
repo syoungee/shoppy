@@ -74,3 +74,18 @@ export async function writeUserData(productData) {
     options: productData.options.split(','),
   });
 }
+
+// products 데이터 가져오는 함수
+export async function readProductData() {
+  return await get(child(database, 'products')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const products = snapshot.val();
+        console.log(products);
+        return products;
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
