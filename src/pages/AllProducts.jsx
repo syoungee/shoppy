@@ -15,8 +15,8 @@ export default function Products() {
     queryFn: readProductData,
   });
 
-  const handleClick = (id) => {
-    navigate(`/products/${id}`);
+  const handleClick = (item) => {
+    navigate(`/products/${item.id}`, { state: { key: item } });
   };
 
   return (
@@ -31,7 +31,7 @@ export default function Products() {
               <div
                 key={item.id}
                 className="bg-white p-4 border border-gray-100 shadow-md rounded-md flex flex-col justify-between"
-                onClick={() => handleClick(item.id)}
+                onClick={() => handleClick(item)}
               >
                 <div className="w-full relative mb-2">
                   <img src={item.image} alt={item.category} className="w-full h-300 object-cover rounded-md" />
