@@ -1,8 +1,10 @@
 import React from 'react';
 import { readProductData } from '../auth/firebaseAuth';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Products() {
+  const navigate = useNavigate();
   const {
     isLoading,
     error,
@@ -11,6 +13,10 @@ export default function Products() {
     queryKey: ['products'],
     queryFn: readProductData,
   });
+
+  const handleClick = (id) => {
+    navigate(`/products/${id}`);
+  };
 
   return (
     <>
@@ -27,7 +33,11 @@ export default function Products() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
           {products &&
             products.map((item, index) => (
-              <div key={item.id} className="bg-white p-4 border border-gray-100 shadow-md rounded-md flex flex-col justify-between">
+              <div
+                key={item.id}
+                className="bg-white p-4 border border-gray-100 shadow-md rounded-md flex flex-col justify-between"
+                onClick={() => handleClick(item.id)}
+              >
                 <div className="w-full relative mb-2">
                   <img src={item.image} alt={item.category} className="w-full h-300 object-cover rounded-md" />
                 </div>
