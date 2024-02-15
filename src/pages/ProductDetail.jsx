@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { addCartData } from '../auth/firebaseAuth';
+import { useMutation } from '@tanstack/react-query';
 
 export default function ProductDetail() {
   const location = useLocation();
   const [productData, setProductData] = useState(null);
   const [selectedOption, setSelectedOption] = useState('');
+
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return addCartData(data);
+    },
+    onSuccess: async () => {
+      console.log("I'm first!");
+    },
+    onSettled: async () => {
+      console.log("I'm second!");
+    },
+  });
 
   useEffect(() => {
     setProductData(location.state?.item);
@@ -12,6 +26,12 @@ export default function ProductDetail() {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+
+  const addtoCart = (e) => {
+    e.preventDefault();
+    const data = { ...productData, option: selectedOption };
+    mutation.mutate(data);
   };
 
   return (
@@ -48,7 +68,11 @@ export default function ProductDetail() {
                 ))}
               </select>
             </div>
-            <button className="bg-brand text-white w-full py-2 px-4 rounded-sm hover:brightness-110">장바구니에 추가</button>
+            {mutation.isLoading && <p>Adding product...</p>}
+            {mutation.isSuccess && <p>✅Added to cart!</p>}
+            <button className="bg-brand text-white w-full py-2 px-4 rounded-sm hover:brightness-110" onClick={addtoCart}>
+              장바구니에 추가
+            </button>
           </div>
         </div>
       )}

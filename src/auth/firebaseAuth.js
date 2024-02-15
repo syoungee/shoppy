@@ -89,3 +89,47 @@ export async function readProductData() {
       console.error(error);
     });
 }
+
+// carts 데이터 추가 함수
+
+export async function addCartData(productData) {
+  await get(child(database, `carts/${productData.id}`)) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log(data, '존재!!');
+        set(child(database, `carts/${productData.id}`), {
+          id: productData.id,
+          title: productData.title,
+          price: parseInt(productData.price),
+          image: productData.image,
+          category: productData.category,
+          description: productData.description,
+          option: productData.option,
+          quantity: data.quantity + 1,
+        });
+      } else {
+        set(child(database, `carts/${productData.id}`), {
+          id: productData.id,
+          title: productData.title,
+          price: parseInt(productData.price),
+          image: productData.image,
+          category: productData.category,
+          description: productData.description,
+          option: productData.option,
+          quantity: 1,
+        });
+      }
+    });
+
+  // return set(child(database, `carts/${productData.id}`), {
+  //   id: productData.id,
+  //   title: productData.title,
+  //   price: parseInt(productData.price),
+  //   image: productData.image,
+  //   category: productData.category,
+  //   description: productData.description,
+  //   option: productData.option,
+  //   quantity: 1,
+  // });
+}
