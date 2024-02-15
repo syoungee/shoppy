@@ -7,7 +7,7 @@ export default function ProductDetail() {
   const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
-    setProductData(location.state?.key);
+    setProductData(location.state?.item);
   }, []);
 
   const handleOptionChange = (event) => {
@@ -19,20 +19,23 @@ export default function ProductDetail() {
       <h3>product detail page</h3>
       {productData && (
         <div className="flex">
-          <img className="w-2/3" src={`${productData.image}`} alt={productData.description}></img>
+          <img className="w-full px-4 basis-2/3" src={`${productData.image}`} alt={productData.description}></img>
           <div className="w-1/3 p-3">
+            <h2 className="text-3xl font-bold py-2 border-b border-gray-400">{productData.title}</h2>
             <p>{productData.category}</p>
-            <p>{productData.description}</p>
-            <p>{productData.price}</p>
+            <p className="py-4 text-lg">{productData.description}</p>
+            <p>${productData.price}</p>
             <br />
-            <div className="mb-4">
-              <label htmlFor="options" className="text-brand block">
+            <div className="mb-4 flex items-center">
+              <label htmlFor="options" className="text-brand font-bold">
                 옵션:
               </label>
               <select
                 name="options"
                 id="options"
-                className={`mt-1 block w-full py-2 px-4 border ${selectedOption ? 'border-solid' : 'border-dashed'} border-brand focus:outline-none focus:border-brand-dark rounded-sm`}
+                className={`p-2 m-4 flex-1 border ${
+                  selectedOption ? 'border-solid' : 'border-dashed'
+                } border-brand focus:outline-none focus:border-brand-dark rounded-sm`}
                 onChange={handleOptionChange}
                 value={selectedOption}
               >

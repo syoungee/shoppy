@@ -16,7 +16,7 @@ export default function Products() {
   });
 
   const handleClick = (item) => {
-    navigate(`/products/${item.id}`, { state: { key: item } });
+    navigate(`/products/${item.id}`, { state: { item } });
   };
 
   return (
@@ -30,7 +30,7 @@ export default function Products() {
             products.map((item, index) => (
               <div
                 key={item.id}
-                className="bg-white p-4 border border-gray-100 shadow-md rounded-md flex flex-col justify-between"
+                className="bg-white p-4 border border-gray-100 shadow-md rounded-md flex flex-col justify-between cursor-pointer trainsition-all hover:scale-105"
                 onClick={() => handleClick(item)}
               >
                 <div className="w-full relative mb-2">
