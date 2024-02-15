@@ -15,8 +15,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div>
-      <h3>product detail page</h3>
+    <>
       {productData && (
         <div className="flex">
           <img className="w-full px-4 basis-2/3" src={`${productData.image}`} alt={productData.description}></img>
@@ -53,6 +52,6 @@ export default function ProductDetail() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

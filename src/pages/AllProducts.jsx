@@ -37,7 +37,8 @@ export default function Products() {
                   <img src={item.image} alt={item.category} className="w-full h-300 object-cover rounded-md" />
                 </div>
                 <div className="w-full h-300">
-                  <p className="text-lg font-bold mb-2">{item.category}</p>
+                  <p className="text-lg font-bold mb-2">{item.title}</p>
+                  <p className="text-gray-600">{item.category}</p>
                   <p className="text-gray-600">${item.price}</p>
                 </div>
               </div>
