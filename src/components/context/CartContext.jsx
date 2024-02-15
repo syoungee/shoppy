@@ -1,11 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { readCartData } from '../../auth/firebaseAuth';
 
 const CartContext = createContext();
 
 export default function CartContextProvider({ children }) {
-  const [cartData, setCartData] = useState([1, 2, 3]);
+  const [cartData, setCartData] = useState();
 
-  useEffect(() => {}, []);
+  const getCartData = async () => {
+    const data = await readCartData();
+    setCartData(data);
+  };
+
+  useEffect(() => {
+    getCartData();
+  }, []);
 
   return <CartContext.Provider value={{ cartData, setCartData }}>{children}</CartContext.Provider>;
 }

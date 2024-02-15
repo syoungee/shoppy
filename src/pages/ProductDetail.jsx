@@ -30,8 +30,12 @@ export default function ProductDetail() {
 
   const addtoCart = (e) => {
     e.preventDefault();
-    const data = { ...productData, option: selectedOption };
-    mutation.mutate(data);
+    if (selectedOption) {
+      const data = { ...productData, option: selectedOption };
+      mutation.mutate(data);
+    } else {
+      console.log('옵션 선택해!');
+    }
   };
 
   return (

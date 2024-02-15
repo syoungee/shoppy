@@ -91,7 +91,6 @@ export async function readProductData() {
 }
 
 // carts 데이터 추가 함수
-
 export async function addCartData(productData) {
   await get(child(database, `carts/${productData.id}`)) //
     .then((snapshot) => {
@@ -121,15 +120,19 @@ export async function addCartData(productData) {
         });
       }
     });
+}
 
-  // return set(child(database, `carts/${productData.id}`), {
-  //   id: productData.id,
-  //   title: productData.title,
-  //   price: parseInt(productData.price),
-  //   image: productData.image,
-  //   category: productData.category,
-  //   description: productData.description,
-  //   option: productData.option,
-  //   quantity: 1,
-  // });
+// cart data 가져오기
+export async function readCartData() {
+  return await get(child(database, 'carts')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const carts = snapshot.val();
+        // console.log('carts', Object.values(carts));
+        return Object.values(carts);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
