@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { readCartData } from '../../auth/firebaseAuth';
+import { readCartData } from '../auth/firebaseAuth';
 
 const CartContext = createContext();
 

@@ -5,8 +5,8 @@ import { BsFillPencilFill } from 'react-icons/bs';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import Button from './Button';
 import User from './User';
-import { useAuthContext } from './context/AuthContext';
-import { useCartContext } from './context/CartContext';
+import { useAuthContext } from '../context/AuthContext';
+import { useCartContext } from '../context/CartContext';
 
 export default function Navbar() {
   const { user, login, logout } = useAuthContext();
