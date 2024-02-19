@@ -1,23 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getCart } from '../auth/firebaseAuth';
 import { useAuthContext } from './AuthContext';
+import { useQuery } from '@tanstack/react-query';
 
 const CartContext = createContext();
 
 export default function CartContextProvider({ children }) {
-  const [cartData, setCartData] = useState();
   const { uid } = useAuthContext();
 
-  const getCartData = async () => {
-    const data = await getCart(uid);
-    setCartData(data);
-  };
+  const { data: cartData } = useQuery({
+    queryKey: ['carts'],
+    queryFn: () => getCart(uid),
+  });
 
-  useEffect(() => {
-    getCartData();
-  }, []);
-
-  return <CartContext.Provider value={{ cartData, setCartData }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ cartData }}>{children}</CartContext.Provider>;
 }
 
 export function useCartContext() {
