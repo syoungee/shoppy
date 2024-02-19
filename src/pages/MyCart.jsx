@@ -1,52 +1,45 @@
 import React from 'react';
 import { getCart } from '../auth/firebaseAuth';
-import { useAuthContext } from '../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { useAuthContext } from '../context/AuthContext';
+import CartItem from '../components/CartItem';
+import { BsFillPlusCircleFill } from 'react-icons/bs';
+import { FaEquals } from 'react-icons/fa';
+import PriceCard from '../components/PriceCard';
+import Button from '../components/Button';
 
-export default function Cart() {
+const SHIPPING = 3000;
+
+export default function MyCart() {
   const { uid } = useAuthContext();
-
-  const { isLoading, data: cartData } = useQuery({
+  const { isLoading, data: products } = useQuery({
     queryKey: ['carts'],
     queryFn: () => getCart(uid),
   });
 
   if (isLoading) return <p>Loading...</p>;
 
-  // Check if cartData has products
-  const hasProducts = cartData && cartData.length > 0;
-  const sum = cartData.reduce((accumulator, currentItem) => accumulator + currentItem.price, 0);
-
+  const hasProducts = products && products.length > 0;
+  const totalPrice = products && products.reduce((prev, current) => prev + parseInt(current.price) * current.quantity, 0);
   return (
-    <div className="container mx-auto my-8 p-8 bg-white shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-      {hasProducts ? (
-        <ul>
-          {cartData.map((product) => (
-            <li key={product.id} className="mb-4 border-b pb-4 flex items-center justify-between relative">
-              <div className="w-1/7">
-                <img src={product.image} className="object-cover h-20 w-20" alt={product.title} />
-              </div>
-              <div className="ml-4 flex-1">
-                <p className="text-xl font-semibold">{product.title}</p>
-                <p className="text-gray-600">{product.name}</p>
-                <p className="text-gray-600">option: {product.option}</p>
-                <p className="text-gray-700">Quantity: {product.quantity}</p>
-                <p className="">Price: ${product.price}</p>
-              </div>
-              <button className="text-gray-500 flex items-center">
-                <AiOutlineDelete size={20} />
-              </button>
-            </li>
-          ))}
-          <div className="mt-8">
-            <p className="text-xl font-bold">Total: ${sum}</p>
+    <section className="p-8 flex flex-col">
+      <p className="text-2xl text-center font-bold pb-4 border-b border-gray-300">내 장바구니</p>
+      {!hasProducts && <p>장바구니에 상품이 없습니다. 열심히 쇼핑해 주세요!</p>}
+      {hasProducts && (
+        <>
+          <ul className="border-b border-gray-300 mb-8 p-4 px-8">
+            {products && products.map((product) => <CartItem key={product.id} product={product} uid={uid} />)}
+          </ul>
+          <div className="flex justify-between items-center mb-6 px-2 md:px-8 lg:px-16">
+            <PriceCard text="상품 총액" price={totalPrice} />
+            <BsFillPlusCircleFill className="shrink-0" />
+            <PriceCard text="배송액" price={SHIPPING} />
+            <FaEquals className="shrink-0" />
+            <PriceCard text="총가격" price={totalPrice + SHIPPING} />
           </div>
-        </ul>
-      ) : (
-        <p className="text-gray-600">Your cart is empty.</p>
+          <Button text="주문하기" />
+        </>
       )}
-    </div>
+    </section>
   );
 }
