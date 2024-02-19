@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 // import { getDatabase } from 'firebase/database';
-import { getDatabase, ref, child, get, set } from 'firebase/database';
+import { getDatabase, ref, child, get, set, remove } from 'firebase/database';
 // import { push } from 'firebase/database';
 import { v4 as uuid } from 'uuid';
 // import { getAnalytics } from 'firebase/analytics';
@@ -135,4 +135,20 @@ export async function readCartData() {
     .catch((error) => {
       console.error(error);
     });
+}
+
+export async function getCart(userId) {
+  return get(child(database, `carts/${userId}`)) //
+    .then((snapshot) => {
+      const items = snapshot.val() || {};
+      return Object.values(items);
+    });
+}
+
+export async function addOrUpdateToCart(userId, product) {
+  return set(child(database, `carts/${userId}/${product.id}`), product);
+}
+
+export async function removeFromCart(userId, productId) {
+  return remove(child(database, `carts/${userId}/${productId}`));
 }

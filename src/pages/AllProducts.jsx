@@ -15,8 +15,8 @@ export default function Products() {
     queryFn: readProductData,
   });
 
-  const handleClick = (item) => {
-    navigate(`/products/${item.id}`, { state: { item } });
+  const handleClick = (product) => {
+    navigate(`/products/${product.id}`, { state: { product } });
   };
 
   return (
