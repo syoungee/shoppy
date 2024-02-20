@@ -24,11 +24,8 @@ export default function ProductDetail() {
       return addOrUpdateToCart(uid, data);
     },
     onSuccess: async () => {
-      console.log("I'm first!");
-    },
-    onSettled: async () => {
-      console.log("I'm second!");
-    },
+      console.log("successed update to cart");
+    }
   });
 
   const handleOptionChange = (event) => {
