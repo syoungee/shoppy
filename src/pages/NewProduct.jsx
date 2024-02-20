@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { writeUserData } from '../auth/firebaseAuth';
+import useProducts from '../hooks/useProducts';
 
 export default function NewProduct() {
   const [image, setImage] = useState(null);
   const [success, setSuccess] = useState();
   const [isUploading, setIsUploading] = useState(false);
+  const { addProduct } = useProducts();
+
   const [formData, setFormData] = useState({
     image: null,
     title: '',
@@ -32,15 +34,16 @@ export default function NewProduct() {
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       setIsUploading(true);
-      await writeUserData(formData).then(() => {
-        setSuccess('성공적으로 제품이 추가되었습니다.');
-        setTimeout(() => {
-          setSuccess(null);
-        }, 4000);
+      addProduct.mutate(formData, {
+        onSuccess: () => {
+          setSuccess('성공적으로 제품이 추가되었습니다.');
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+          console.log('Data submitted successfully');
+        },
       });
-      console.log('Data submitted successfully');
     } catch (error) {
       console.error('Error submitting data:', error);
     } finally {
