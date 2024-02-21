@@ -6,11 +6,12 @@ export default function useCarts() {
   const cartsQuery = useQuery({ queryKey: ['carts'], queryFn: (userId) => getCart(userId), staleTime: 1000 * 60 });
 
   const updateCartItem = useMutation({
-    mutationFn: ({userId, product}) => addOrUpdateToCart(userId, product),
+    mutationFn: ({ userId, product }) => addOrUpdateToCart(userId, product),
     onSuccess: () => queryClient.invalidateQueries(['carts']),
   });
+  
   const removeCartItem = useMutation({
-    mutationFn: ({userId, productId}) => removeFromCart(userId, productId),
+    mutationFn: ({ userId, productId }) => removeFromCart(userId, productId),
     onSuccess: () => queryClient.invalidateQueries(['carts']),
   });
   return {

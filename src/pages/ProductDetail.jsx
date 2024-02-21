@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { addOrUpdateToCart } from '../auth/firebaseAuth';
-import { useMutation } from '@tanstack/react-query';
+import useCarts from '../hooks/useCarts';
 import { useAuthContext } from '../context/AuthContext';
 
 export default function ProductDetail() {
-  const location = useLocation();
   const { uid } = useAuthContext();
+  const { updateCartItem } = useCarts();
+  const [success, setSuccess] = useState();
+
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -16,17 +17,16 @@ export default function ProductDetail() {
 
   const handleClick = () => {
     const product = { id, image, title, price, option: selected, quantity: 1 };
-    mutation.mutate(product);
+    updateCartItem.mutate(
+      { userId: uid, product },
+      {
+        onSuccess: () => {
+          setSuccess('장바구니에 추가되었습니다.');
+          setTimeout(() => setSuccess(null), 3000);
+        },
+      }
+    );
   };
-
-  const mutation = useMutation({
-    mutationFn: (data) => {
-      return addOrUpdateToCart(uid, data);
-    },
-    onSuccess: async () => {
-      console.log("successed update to cart");
-    }
-  });
 
   const handleOptionChange = (event) => {
     setSelected(event.target.value);
@@ -65,8 +65,7 @@ export default function ProductDetail() {
               ))}
             </select>
           </div>
-          {mutation.isLoading && <p>Adding product...</p>}
-          {mutation.isSuccess && <p>✅Added to cart!</p>}
+          {success && <p className="my-2">✅{success}</p>}
           <button className="bg-brand text-white w-full py-2 px-4 rounded-sm hover:brightness-110" onClick={handleClick}>
             장바구니에 추가
           </button>
