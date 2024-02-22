@@ -17,6 +17,7 @@ export default function Products() {
 
   const handleClick = (product) => {
     navigate(`/products/${product.id}`, { state: { product } });
+    window.scrollTo(0, 0);
   };
 
   return (
