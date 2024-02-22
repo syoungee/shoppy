@@ -1,5 +1,8 @@
 # Shopping app with firebase & cloudinary
 
+## Demo App
+https://modencar-shoppy.netlify.app/
+
 ## 구현 사항
 
 - [x]  로그인 페이지 - Google 소셜 로그인 with firebase
