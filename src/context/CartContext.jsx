@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { getCart } from '../auth/firebaseAuth';
 import { useAuthContext } from './AuthContext';
 import { useQuery } from '@tanstack/react-query';
