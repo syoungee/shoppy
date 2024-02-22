@@ -1,7 +1,27 @@
-# Shopping app with firebase & cloudinary
+# Shopping app with firebase & cloudinary & netlify deployment
 
 ## Demo App
 https://modencar-shoppy.netlify.app/
+
+### ✔️ 전반적인 서비스 사용 데모<br/>
+https://github.com/syoungee/shoppy/assets/22606199/6cdd53b4-60d5-4a3e-807e-720246a18dbe
+
+
+### ✔️ 메인페이지
+![스크린샷 2024-02-22 오후 1 43 41](https://github.com/syoungee/shoppy/assets/22606199/b8e4b330-f61f-4bf2-9ae0-df71b0c89076)
+### ✔️ firebase 구글 로그인
+![스크린샷 2024-02-22 오후 1 44 11](https://github.com/syoungee/shoppy/assets/22606199/aad6b63e-ea44-4092-b0bf-4a12152b5c1f)
+### ✔️ 새로운 제품 등록
+![스크린샷 2024-02-22 오후 1 45 08](https://github.com/syoungee/shoppy/assets/22606199/17e24136-8e60-4879-a65f-6f1a0cda4f78)
+<br/>
+### ✔️ 제품 페이지에 진입하면 옵션이 여러 개로 설정된 것 확인 가능<br/>
+![스크린샷 2024-02-22 오후 1 45 57](https://github.com/syoungee/shoppy/assets/22606199/c92b846f-bddf-482c-81a3-2b6af8fe0012)
+<br/>
+### ✔️ 새로운 제품 생성 완료<br/>
+![스크린샷 2024-02-22 오후 1 45 31](https://github.com/syoungee/shoppy/assets/22606199/aa61d3a0-212d-4e5f-b073-ec10af7b2c46)
+### ✔️ 장바구니 페이지<br/>
+![스크린샷 2024-02-22 오후 1 46 08 1](https://github.com/syoungee/shoppy/assets/22606199/04dd4846-72ed-432a-8890-fe2fca492f55) 
+
 
 ## 구현 사항
 
