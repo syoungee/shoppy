@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
 // import { getDatabase } from 'firebase/database';
 import { getDatabase, ref, child, get, set, remove } from 'firebase/database';
 // import { push } from 'firebase/database';
@@ -27,7 +27,7 @@ const provider = new GoogleAuthProvider();
 // const database = getDatabase();
 
 export function login() {
-  signInWithPopup(auth, provider).catch(console.error);
+  signInWithRedirect(auth, provider).catch(console.error);
 }
 
 export function logout() {
