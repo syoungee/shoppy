@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, signOut, onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
 // import { getDatabase } from 'firebase/database';
 import { getDatabase, ref, child, get, set, remove } from 'firebase/database';
 // import { push } from 'firebase/database';
